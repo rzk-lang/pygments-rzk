@@ -41,7 +41,13 @@ class RzkLexer(pygments.lexer.RegexLexer):
             (r'^(#def|#define|#postulate)(\s+)((?![-?!.])[^.\\;,#"\]\[)(}{><|\s]*)(?=$|[.\\;,#"\]\[)(}{><|\s])((\s+)(uses)(\s+\()((?![-?!.])[^.\\;,#"\]\[)(}{><|]*)(\)))?',
              bygroups(Keyword.Reserved, Punctuation, Name.Function, None, Punctuation, Keyword, Punctuation, Text, Punctuation)),
 
-            # bultins
+            (r'<\|', Punctuation),
+            (r'\|>', Punctuation),
+
+            (r'\blet\s+mod\b', Keyword),
+            (r'\bmod\b', Name.Function),
+
+            # builtins
             (r'(^|(?<=[^.\\;,#"\]\[)(}{><|\s]))(CUBE|TOPE|U(nit)?)(?=$|[.\\;,#"\]\[)(}{><|\s])',
              Keyword.Type),
             (r'(^|(?<=[.\\;,#"\]\[)(}{><|\s]))(1|2|Sigma|∑|Σ)(?=$|[.\\;,#"\]\[)(}{><|\s])',
@@ -54,6 +60,10 @@ class RzkLexer(pygments.lexer.RegexLexer):
              String),
             (r'(^|(?<=[.\\;,#"\]\[)(}{><|\s]))as(?=$|[.\\;,#"\]\[)(}{><|\s])',
              Keyword.Reserved),
+            (r'\blet\b', Keyword),
+
+            # modalities
+            (r'(♭|♯|ᵒᵖ)', Name.Decorator),
 
             # parameters
             (r'(\(\s*)([^{:\)]+\s*)(:)(?=$|[.\\;,#"\]\[)(}{><|\s])',
