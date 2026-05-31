@@ -1,0 +1,54 @@
+% Compile with: pdflatex -shell-escape demo.tex
+% (minted requires -shell-escape; pygments-rzk must be installed)
+\documentclass[aspectratio=169]{beamer}
+
+\usetheme{moloch}  % or: \usetheme{metropolis}
+
+\usepackage{minted}
+\usemintedstyle{xcode}
+
+% Suppress the red error boxes Pygments draws around tokens the rzk lexer
+% does not recognise (the lexer has no catch-all rule yet).
+\AtBeginDocument{%
+  \expandafter\def\csname PYG@tok@err\endcsname{}%
+}
+
+\title{\textsc{Rzk} highlighting in LaTeX with \texttt{minted}}
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{frame}[fragile]
+  \frametitle{\textsc{Rzk} highlighting in LaTeX with \texttt{minted}}
+
+A basic example:
+
+\scriptsize
+\begin{minted}[linenos,frame=leftline,texcomments]{rzk}
+#lang rzk-1
+
+#section path-algebra
+
+#variable A : U
+#variables x y z : A
+
+-- $\text{Paths are symmetric, so we can reverse $x =_A y$ to $y =_A x$.}$
+#define rev uses (A x y)
+  (p : x = y)       -- $\text{A path from $x$ to $y$ in $A$.}$
+  : y = x           -- $\text{The reversal will be defined by path induction on $p$.}$
+  := idJ(A, x, \y' p' -> y' = x, refl, y, p)
+
+-- $\text{Path composition (concatenation) by induction on the second path.}$
+#define concat
+  (p : x = y)       -- $\text{A path from $x$ to $y$ in $A$.}$
+  (q : y = z)       -- $\text{A path from $y$ to $z$ in $A$.}$
+  : (x = z)         -- $\text{The concatenated path $x = y = z$.}$
+  := idJ(A, y, \z' q' -> (x = z'), p, z, q)
+
+#end path-algebra
+\end{minted}
+
+\end{frame}
+
+\end{document}
