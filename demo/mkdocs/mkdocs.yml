@@ -1,0 +1,19 @@
+site_name: Rzk highlighting demo
+
+# The default MkDocs theme ships highlight.js and re-highlights every code
+# block on page load, clobbering Pygments's output. Turn it off so the
+# server-side rzk highlighting from Pygments is what the reader sees.
+theme:
+  name: mkdocs
+  highlightjs: false
+
+# CodeHilite is built into python-markdown and routes ```rzk fenced blocks
+# through Pygments, which picks up the rzk lexer registered by pygments-rzk.
+markdown_extensions:
+  - codehilite:
+      # Inline the Pygments colour styles on each span so the demo works with
+      # the default MkDocs theme (which doesn't bundle a Pygments stylesheet).
+      # For a real site, prefer generating a stylesheet with
+      # `pygmentize -S <style> -f html -a .codehilite` and including it via
+      # `extra_css`.
+      noclasses: true

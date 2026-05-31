@@ -16,7 +16,32 @@ pip install .     # install using pip
 
 ### Use in MkDocs
 
-To be done.
+Once `pygments-rzk` is installed in the same Python environment as MkDocs,
+Pygments will recognise `rzk` fenced code blocks automatically. The only thing
+your MkDocs project needs is a Markdown extension that routes code blocks
+through Pygments — the built-in `codehilite` extension is enough:
+
+```yaml
+# mkdocs.yml
+site_name: My Rzk docs
+
+markdown_extensions:
+  - codehilite
+```
+
+Then write Rzk in fenced blocks tagged `rzk` (see
+[demo/mkdocs/docs/index.md](demo/mkdocs/docs/index.md) for a full example):
+
+````md
+```rzk
+#lang rzk-1
+...
+```
+````
+
+A runnable demo lives in [demo/mkdocs/](demo/mkdocs/) — `cd demo/mkdocs && mkdocs serve`.
+
+![Rendering rzk code in MkDocs (demo).](images/mkdocs-demo.png)
 
 ### Use in Command Line (Terminal)
 
