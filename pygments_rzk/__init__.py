@@ -73,6 +73,13 @@ class RzkLexer(pygments.lexer.RegexLexer):
 
             (r'(\\\s*)((([^→\t\n\r !"#\(\),-\.;:\\\/=<>\?\[\\\]\{\|\}][^\t\n\r !"#\(\),\.;:<>\?\[\\\]\{\|\}]*)\s*)+)',
                 bygroups(Punctuation, Text)),
+
+            # Temporary catch-all: anything not matched above renders as plain
+            # text instead of being tagged as Error (which Pygments styles
+            # draw as a red box). Remove once the rules above cover the full
+            # surface syntax.
+            (r'\s+', Text),
+            (r'.', Text),
         ],
         'string': [
             (r'[^"]+', String),
