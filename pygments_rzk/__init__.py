@@ -48,7 +48,7 @@ class RzkLexer(pygments.lexer.RegexLexer):
             (r'\bmod\b', Name.Function),
 
             # builtins
-            (r'(^|(?<=[^.\\;,#"\]\[)(}{><|\s]))(CUBE|TOPE|U(nit)?|𝒰)(?=$|[.\\;,#"\]\[)(}{><|\s])',
+            (r'(^|(?<=[.\\;,#"\]\[)(}{><|\s]))(CUBE|TOPE|U(nit)?|𝒰)(?=$|[.\\;,#"\]\[)(}{><|\s])',
              Keyword.Type),
             (r'(^|(?<=[.\\;,#"\]\[)(}{><|\s]))(1|2|Sigma|∑|Σ)(?=$|[.\\;,#"\]\[)(}{><|\s])',
              Keyword.Type),
