@@ -5,7 +5,7 @@
 
     Pygments lexer for Rzk language (of proof assistant for synthetic ∞-categories).
 
-    :copyright: Copyright 2023 Nikolai Kudasov
+    :copyright: Copyright 2023-2026 Nikolai Kudasov
     :license: BSD 3, see LICENSE for details.
 """
 
