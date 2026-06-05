@@ -113,7 +113,7 @@ def test_universe_types(kw):
     assert (Keyword.Type, kw) in lex(f"foo : {kw}\n")
 
 
-@pytest.mark.parametrize("kw", ["1", "2", "Sigma", "∑", "Σ"])
+@pytest.mark.parametrize("kw", ["1", "2", "II", "𝕀", "Sigma", "∑", "Σ"])
 def test_cube_and_sigma_types(kw):
     assert (Keyword.Type, kw) in lex(f"foo : {kw} bar\n")
 
@@ -124,7 +124,7 @@ def test_tope_operators(op):
 
 
 @pytest.mark.parametrize(
-    "const", ["⊤", "⊥", "*_1", "*₁", "⋆", "0_2", "0₂", "1_2", "1₂", "TOP", "BOT"]
+    "const", ["⊤", "⊥", "*_1", "*₁", "⋆", "0_2", "0₂", "1_2", "1₂", "0_I", "0ᵢ", "1_I", "1ᵢ", "TOP", "BOT"]
 )
 def test_constants(const):
     assert (Number, const) in lex(f" {const} \n")
