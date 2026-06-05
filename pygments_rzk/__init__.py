@@ -42,9 +42,6 @@ class RzkLexer(pygments.lexer.RegexLexer):
             (r'^(#def|#define|#postulate)(\s+)((?![-?!.])[^.\\;,#"\]\[)(}{><|\s]*)(?=$|[.\\;,#"\]\[)(}{><|\s])((\s+)(uses)(\s+\()((?![-?!.])[^.\\;,#"\]\[)(}{><|]*)(\)))?',
              bygroups(Keyword.Reserved, Punctuation, Name.Function, None, Punctuation, Keyword, Punctuation, Text, Punctuation)),
 
-            (r'<\|', Punctuation),
-            (r'\|>', Punctuation),
-
             (r'\blet\s+mod\b', Keyword),
             (r'\bmod\b', Name.Function),
 
@@ -66,6 +63,10 @@ class RzkLexer(pygments.lexer.RegexLexer):
              Keyword.Reserved),
             (r'\blet\b', Keyword),
             (r'\bin\b', Keyword),
+
+            # modal bindings: colon fused with modality (e.g. :♭, :_b)
+            (r':(_b|_#|_op|_id|♭|♯|ᵒᵖ)(?=$|[.\\;,#"\]\[)(}{><|\s])',
+             Name.Decorator),
 
             # modalities (Unicode + ASCII forms)
             (r'(^|(?<=[.\\;,#"\]\[)(}{><|\s]))(_b|_#|_op|_id|♭|♯|ᵒᵖ)(?=$|[.\\;,#"\]\[)(}{><|\s])',
