@@ -42,9 +42,6 @@ class RzkLexer(pygments.lexer.RegexLexer):
             (r'^(#def|#define|#postulate)(\s+)((?![-?!.])[^.\\;,#"\]\[)(}{><|\s]*)(?=$|[.\\;,#"\]\[)(}{><|\s])((\s+)(uses)(\s+\()((?![-?!.])[^.\\;,#"\]\[)(}{><|]*)(\)))?',
              bygroups(Keyword.Reserved, Punctuation, Name.Function, None, Punctuation, Keyword, Punctuation, Text, Punctuation)),
 
-            (r'<\|', Punctuation),
-            (r'\|>', Punctuation),
-
             (r'\blet\s+mod\b', Keyword),
             (r'\bmod\b', Name.Function),
 
@@ -54,11 +51,11 @@ class RzkLexer(pygments.lexer.RegexLexer):
             # builtins
             (r'(^|(?<=[.\\;,#"\]\[)(}{><|\s]))(CUBE|TOPE|U(nit)?|𝒰)(?=$|[.\\;,#"\]\[)(}{><|\s])',
              Keyword.Type),
-            (r'(^|(?<=[.\\;,#"\]\[)(}{><|\s]))(1|2|Sigma|∑|Σ)(?=$|[.\\;,#"\]\[)(}{><|\s])',
+            (r'(^|(?<=[.\\;,#"\]\[)(}{><|\s]))(1|2|II|𝕀|Sigma|∑|Σ)(?=$|[.\\;,#"\]\[)(}{><|\s])',
              Keyword.Type),
             (r'(===|≡|<=|≤|\\/|∨|/\\|∧)',
              String.Other),
-            (r'(⊤|⊥|\*_1|\*₁|⋆)|(?<=[.\\;,#"\]\[)(}{><|\s])(0_2|0₂|1_2|1₂|TOP|BOT)(?=$|[.\\;,#"\]\[)(}{><|\s])',
+            (r'(⊤|⊥|\*_1|\*₁|⋆)|(?<=[.\\;,#"\]\[)(}{><|\s])(0_2|0₂|1_2|1₂|0_I|0ᵢ|1_I|1ᵢ|TOP|BOT)(?=$|[.\\;,#"\]\[)(}{><|\s])',
              Number),
             (r'(^|(?<=[.\\;,#"\]\[)(}{><|\s]))(recOR|recBOT|idJ|refl|first|second|π₁|π₂|unit|uninvᵒᵖ|invᵒᵖ|unflipᵒᵖ|flipᵒᵖ|uninv_op|inv_op|unflip_op|flip_op)((?=$|[.\\;,#"\]\[)(}{><|\s])|(?=_{))',
              String),
@@ -66,6 +63,10 @@ class RzkLexer(pygments.lexer.RegexLexer):
              Keyword.Reserved),
             (r'\blet\b', Keyword),
             (r'\bin\b', Keyword),
+
+            # modal bindings: colon fused with modality (e.g. :♭, :_b)
+            (r':(_b|_#|_op|_id|♭|♯|ᵒᵖ)(?=$|[.\\;,#"\]\[)(}{><|\s])',
+             Name.Decorator),
 
             # modalities (Unicode + ASCII forms)
             (r'(^|(?<=[.\\;,#"\]\[)(}{><|\s]))(_b|_#|_op|_id|♭|♯|ᵒᵖ)(?=$|[.\\;,#"\]\[)(}{><|\s])',

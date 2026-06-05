@@ -113,7 +113,7 @@ def test_universe_types(kw):
     assert (Keyword.Type, kw) in lex(f"foo : {kw}\n")
 
 
-@pytest.mark.parametrize("kw", ["1", "2", "Sigma", "∑", "Σ"])
+@pytest.mark.parametrize("kw", ["1", "2", "II", "𝕀", "Sigma", "∑", "Σ"])
 def test_cube_and_sigma_types(kw):
     assert (Keyword.Type, kw) in lex(f"foo : {kw} bar\n")
 
@@ -124,7 +124,7 @@ def test_tope_operators(op):
 
 
 @pytest.mark.parametrize(
-    "const", ["⊤", "⊥", "*_1", "*₁", "⋆", "0_2", "0₂", "1_2", "1₂", "TOP", "BOT"]
+    "const", ["⊤", "⊥", "*_1", "*₁", "⋆", "0_2", "0₂", "1_2", "1₂", "0_I", "0ᵢ", "1_I", "1ᵢ", "TOP", "BOT"]
 )
 def test_constants(const):
     assert (Number, const) in lex(f" {const} \n")
@@ -160,10 +160,14 @@ def test_modalities_ascii(m):
     assert (Name.Decorator, m) in lex(f"foo : {m} A\n")
 
 
-def test_modal_type_brackets():
-    tokens = lex("foo : <| ♭ | A |>\n")
-    assert (Punctuation, "<|") in tokens
-    assert (Punctuation, "|>") in tokens
+@pytest.mark.parametrize("m", [":♭", ":♯", ":ᵒᵖ"])
+def test_modal_bindings_unicode(m):
+    assert (Name.Decorator, m) in lex(f"(x {m} A)\n")
+
+
+@pytest.mark.parametrize("m", [":_b", ":_#", ":_op", ":_id"])
+def test_modal_bindings_ascii(m):
+    assert (Name.Decorator, m) in lex(f"(x {m} A)\n")
 
 
 def test_mod_application():
@@ -243,8 +247,11 @@ def test_block_comments_swallow_tricky_content():
         (Keyword, "let mod"),
         (Name.Function, "mod"),
         (Generic.Error, "$extract$"),
-        (Punctuation, "<|"),
-        (Punctuation, "|>"),
+        # modal bindings (colon fused with modality)
+        (Name.Decorator, ":♭"),
+        (Name.Decorator, ":_b"),
+        (Name.Decorator, ":ᵒᵖ"),
+        (Name.Decorator, ":_op"),
         # builtin types
         (Keyword.Type, "CUBE"),
         (Keyword.Type, "TOPE"),
@@ -288,9 +295,12 @@ def test_modal_fixture_exercises_modal_features():
     tokens = lex(src)
     types_and_values = set(tokens)
 
-    # Modal type bracketing
-    assert (Punctuation, "<|") in types_and_values
-    assert (Punctuation, "|>") in types_and_values
+    # Modal bindings (colon fused with modality)
+    assert (Name.Decorator, ":♭") in types_and_values
+    assert (Name.Decorator, ":♯") in types_and_values
+    assert (Name.Decorator, ":ᵒᵖ") in types_and_values
+    assert (Name.Decorator, ":_b") in types_and_values
+    assert (Name.Decorator, ":_op") in types_and_values
     # Unicode modalities used in the fixture
     assert (Name.Decorator, "♭") in types_and_values
     assert (Name.Decorator, "♯") in types_and_values
